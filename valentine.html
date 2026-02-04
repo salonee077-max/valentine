@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: pink;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 350px;
+  text-align: center;
+}
+
+/* Button row */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  position: relative;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background: #e91e63;
+  color: white;
+}
+
+/* No button becomes absolute ONLY while running away */
+#noBtn {
+  background: gray;
+  color: white;
+}
+
+#message {
+  font-size: 26px;
+  color: #ff1493;
+  margin-top: 20px;
+  display: none;
+  font-family: 'Pacifico', cursive;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="box">
+  <h1>Will you be my Valentine Sweetie? 💖</h1>
+
+  <div class="buttons" id="btnRow">
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+  </div>
+
+  <div id="message"></div>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const box = document.getElementById("box");
+const btnRow = document.getElementById("btnRow");
+const message = document.getElementById("message");
+
+let noCount = 0;
+
+// YES click → show message + reset NO button beside YES
+yesBtn.addEventListener("click", () => {
+  message.style.display = "block";
+  message.innerHTML = "Yesss I Knew It 🎀 I love you 😘❤️";
+
+  // Reset NO button back to normal position
+  noBtn.style.position = "static";
+  noBtn.style.left = "";
+  noBtn.style.top = "";
+});
+
+// Move NO button
+function moveNo() {
+  noCount++;
+
+  // Make it absolute only when escaping
+  noBtn.style.position = "absolute";
+
+  const maxX = box.clientWidth - noBtn.clientWidth;
+  const maxY = box.clientHeight - noBtn.clientHeight;
+
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+
+  if (noCount > 2 && noCount <= 7) {
+    message.style.display = "block";
+    message.innerHTML = "Nooo 😭";
+  }
+
+  if (noCount > 7) {
+    message.style.display = "block";
+    message.innerHTML = "Pleasee say yess 🥺🥺👉🏼👈🏼";
+  }
+}
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+</script>
+
+</body>
+</html>
